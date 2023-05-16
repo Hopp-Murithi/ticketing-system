@@ -33,14 +33,14 @@ if (isset($_POST['login'])) {
 
         
         // Get the email address associated with the user
-        $user_email = $user->user_email;
+        $user_email = ' '.$user->user_email;
         var_dump($user_email);
-        var_dump("SELECT * FROM `wp_ticketing` WHERE `assignee` = '$user_email'");
+
         
         // Query the ticketing system to get the tickets assigned to the user's email
         global $wpdb;
-        $tickets = $wpdb->get_results("SELECT * FROM `wp_ticketing` WHERE `assignee` = '$user_email'");
-        var_dump($tickets);
+        $tickets = $wpdb->get_results("SELECT * FROM `wp_newticketing` WHERE `assignee` = '$user_email'");
+    
         if (empty($tickets)) {
             // Display message if no tickets are found
             echo "No tickets found.";

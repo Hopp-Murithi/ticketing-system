@@ -7,9 +7,9 @@
     $ticket_id = null;
     $ticket = null;
 
-    if (isset($_GET['ticket_id'])) {
-        $ticket_id = $_GET['ticket_id'];
-        $ticket = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->prefix}ticketing WHERE id = %d", $ticket_id));
+    if (isset($_GET['id'])) {
+        $ticket_id = $_GET['id'];
+        $ticket = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->prefix}newticketing WHERE id = %d", $ticket_id));
     }
 
     ?>

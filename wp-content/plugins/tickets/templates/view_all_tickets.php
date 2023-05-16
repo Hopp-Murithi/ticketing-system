@@ -1,16 +1,11 @@
 <?php
 global $wpdb;
-$tickets = $wpdb->get_results("SELECT * FROM wp_ticketing");
+$tickets = $wpdb->get_results("SELECT * FROM wp_newticketing");
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete"])) {
     $id = $_POST["id"];
-    $wpdb->update("wp_ticketing", array("is_deleted" => 1), array("id" => $id));
+    $wpdb->update("wp_newticketing", array("is_deleted" => 1), array("id" => $id));
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
-    $id = $_POST["id"];
-    wp_redirect("http://example.com/update-ticket?ticket_id=" . $id);
-    exit;
-}
 ?>
 
 <h1>All tickets</h1>
@@ -33,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
                     <td><?php echo $ticket->due_date ?></td>
                     <td><?php echo $ticket->status ?></td>
                     <td>
-                        <form method="post">
+                        <form action="" method="post">
                             <input type="hidden" name="id" value="<?php echo $ticket->id ?>">
                             <input type="submit" name="update" class="update" value="Update">
                         </form>

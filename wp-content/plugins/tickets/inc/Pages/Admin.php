@@ -19,7 +19,7 @@ class Admin
     {
         add_action('admin_menu', [$this, 'create_ticket_page']);
         add_action('admin_menu', [$this, 'view_all_tickets']);
-        add_action('admin_menu', [$this, 'view_all_tickets']);
+        add_action('admin_menu', [$this, 'edit_ticket']);
     }
 
     function create_ticket_page()
@@ -64,11 +64,15 @@ class Admin
         add_menu_page(
             'Edit ticket',
             'Edit ticket',
-            'read',
-            'view_tickets',
-            [$this, "view_all_tickets_cb"],
-            'dashicons-book',
+            'manage_options',
+            'update_ticket',
+            [$this, "edit_ticket_cb"],
+            'dashicons-edit',
             111
         );
+    }
+    function edit_ticket_cb()
+    {
+        require_once ABSPATH . 'wp-content/plugins/tickets/templates/update_ticket.php';
     }
 }

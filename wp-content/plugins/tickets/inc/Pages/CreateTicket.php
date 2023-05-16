@@ -18,7 +18,7 @@ class CreateTicket
     {
         global $wpdb;
 
-        $table_name = $wpdb->prefix . 'ticketing';
+        $table_name = $wpdb->prefix . 'newticketing';
 
         $query = "CREATE TABLE IF NOT EXISTS " . $table_name . "(
             id int AUTO_INCREMENT PRIMARY KEY, 
@@ -51,7 +51,7 @@ class CreateTicket
 
            
         $existingTask = $wpdb->get_row(
-            $wpdb->prepare("SELECT * FROM {$wpdb->prefix}ticketing WHERE assignee = %s AND is_deleted = 0", $_POST['assignee'])
+            $wpdb->prepare("SELECT * FROM {$wpdb->prefix}newticketing WHERE assignee = %s AND is_deleted = 0", $_POST['assignee'])
         );
 
         if ($existingTask) {
@@ -59,7 +59,7 @@ class CreateTicket
             exit;
         }
 
-            $table_name = $wpdb->prefix . 'ticketing';
+            $table_name = $wpdb->prefix . 'newticketing';
             $results = $wpdb->insert($table_name, $data);
 
 
