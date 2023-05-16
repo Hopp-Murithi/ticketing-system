@@ -1,0 +1,19 @@
+{
+    "name": "hopp/tickets",
+    "description": "A plugin to assign and manage tickets",
+    "type": "project",
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Hopp-Murithi",
+            "email": "hoppmurithi@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Inc\\": "inc/"
+        }
+    }
+}
