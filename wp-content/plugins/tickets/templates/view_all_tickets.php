@@ -1,13 +1,20 @@
 <?php
 global $wpdb;
+$tickets = $wpdb->get_results("SELECT * FROM wp_ticketing");
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete"])) {
+    $id = $_POST["id"];
+    $wpdb->update("wp_ticketing", array("is_deleted" => 1), array("id" => $id));
+}
 
-$tickets = $wpdb->get_results("SELECT * FROM wp_ticketing ");
-
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
+    $id = $_POST["id"];
+    wp_redirect("http://example.com/update-ticket?ticket_id=" . $id);
+    exit;
+}
 ?>
 
-<h1>All tickets assigned</h1>
+<h1>All tickets</h1>
 <div class="container">
-
     <table>
         <tr>
             <th>Ticket title</th>
@@ -15,43 +22,34 @@ $tickets = $wpdb->get_results("SELECT * FROM wp_ticketing ");
             <th>Assignee</th>
             <th>Due date</th>
             <th>Progress</th>
-            
-        
-
         </tr>
 
-
-        <?php
-        for ($i = 0; $i < count($tickets); $i++) {
-        ?>
-
-            <tr>
-                <td><?php echo $tickets[$i]->title ?></td>
-                <td><?php echo $tickets[$i]->task ?></td>
-                <td><?php echo $tickets[$i]->assignee ?></td>
-                <td><?php echo $tickets[$i]->due_date ?></td>
-                <td><?php echo $tickets[$i]->status ?></td>
-                <td>
-                        <form method=" post" >
-                            <input type="hidden" name="id" value="<?php ?>">
-                            <input type="submit" value="Update">
+        <?php foreach ($tickets as $ticket) { ?>
+            <?php if ($ticket->is_deleted != 1) { ?> <!-- Check if the row is not deleted -->
+                <tr id="data-row">
+                    <td><?php echo $ticket->title ?></td>
+                    <td><?php echo $ticket->task ?></td>
+                    <td><?php echo $ticket->assignee ?></td>
+                    <td><?php echo $ticket->due_date ?></td>
+                    <td><?php echo $ticket->status ?></td>
+                    <td>
+                        <form method="post">
+                            <input type="hidden" name="id" value="<?php echo $ticket->id ?>">
+                            <input type="submit" name="update" class="update" value="Update">
                         </form>
                     </td>
                     <td>
-                        <form  >
-                            <input type="hidden" name="id" value="<?php  ?>">
-                            <input class="delete" type="submit" value="Delete">
+                        <form method="post">
+                            <input type="hidden" name="id" value="<?php echo $ticket->id ?>">
+                            <input type="submit" name="delete" class="delete" value="Delete">
                         </form>
                     </td>
-            </tr>
-        <?php
-        }
-
-        ?>
-
+                </tr>
+            <?php } ?>
+        <?php } ?>
     </table>
-
 </div>
+
 <style>
     body {
         font-size: 16px;
@@ -83,12 +81,13 @@ $tickets = $wpdb->get_results("SELECT * FROM wp_ticketing ");
         border: 1px solid black;
         padding: 4px 12px;
     }
-    .delete{
-        background-color:red ;
+
+    .delete {
+        background-color: red;
         color: #ffffff;
         font-weight: 500;
         border-radius: 8px;
-        border:1px solid red;
+        border: 1px solid red;
         padding: 5px;
     }
 </style>

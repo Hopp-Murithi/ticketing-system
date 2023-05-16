@@ -3,7 +3,7 @@
     global $wpdb;
     $employees = $wpdb->get_results("SELECT * FROM wp_users");
 
-
+    
     ?>
 
 
@@ -116,17 +116,20 @@
     }
 
     input[type="submit"] {
-        background-color: #040404;
-        color: white;
+        background-color: #1DA1F2;
+        width: 100%;
+        font-size: 22px;font-weight: 600;
+        color: black;
         margin-top: 20px;
-        padding: 10px 20px;
+        margin-bottom: 40px;
+        padding: 15px 20px;
         border: none;
         border-radius: 4px;
         cursor: pointer;
     }
 
     input[type="submit"]:hover {
-        background-color: #040404;
+        background-color: #040404;color: white;
     }
 
     #message {

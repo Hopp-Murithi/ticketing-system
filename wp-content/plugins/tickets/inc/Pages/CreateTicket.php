@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package ClassManager
+ * @package ticketing plugin
  */
 
 namespace Inc\Pages;
@@ -41,14 +41,23 @@ class CreateTicket
                 'title' => $_POST['title'],
                 'assignee' => $_POST['assignee'],
                 'task' => $_POST['task'],
-                'status' => 'pending', 
-                'is_deleted' => 0, 
+                'status' => 'pending',
+                'is_deleted' => 0,
                 'due_date' => $_POST['due_date']
-            
+
             ];
 
             global $wpdb;
 
+           
+        $existingTask = $wpdb->get_row(
+            $wpdb->prepare("SELECT * FROM {$wpdb->prefix}ticketing WHERE assignee = %s AND is_deleted = 0", $_POST['assignee'])
+        );
+
+        if ($existingTask) {
+            echo "Assignee already has an assigned task.";
+            exit;
+        }
 
             $table_name = $wpdb->prefix . 'ticketing';
             $results = $wpdb->insert($table_name, $data);
@@ -59,7 +68,7 @@ class CreateTicket
             $success_msg = false;
             if ($results == true) {
                 $success_msg = true;
-            } 
+            }
         }
     }
 }
